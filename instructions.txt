@@ -1,0 +1,35 @@
+[Requirements]
+-login/logout
+-create a text and set the date to unlock it
+-make the payment 
+-receive email with the invoice and the payment data
+-wait
+-receive an email with a link to see the text
+
+[Backend]
+create laravel project 
+	composer create-project laravel/laravel backend
+run the server 
+	php artisan serve
+		http://localhost:8000/
+		the server is displayed on the command line
+create a model
+	php artisan make:model Product --migration
+migrate a migration to data base
+	php artisan migrate
+make a controller 
+	php artisan make:controller ProductController --api
+check what routes exist 
+	php artisan route:list
+
+[Frontend]
+npm run dev
+
+material-ui (https://mui.com/pt/material-ui/getting-started/installation/)
+axios (https://axios-http.com/docs/intro)
+redux (https://redux.js.org/introduction/getting-started)
+React Router (https://reactrouter.com/docs/en/v6/getting-started/tutorial)
+
+[Libraries]
+Stripe
+Cron Job
