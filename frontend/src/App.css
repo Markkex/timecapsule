@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.initial {
+    background: url(./assets/videos/160929_160_London_LondonEyeTimeLapseNight_1080p.mp4);
+    height: 70vh;
+    
+}
+
+#myVideo {
+    position: absolute;
+    right: 0;
+    top: 10vh;
+    min-width: 100%; 
+    min-height: 100%;
+  }
+  
+  
+  

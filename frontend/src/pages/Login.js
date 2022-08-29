@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 const Login = () => {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.user);
-  const data = [];
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
