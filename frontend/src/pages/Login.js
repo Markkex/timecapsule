@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { loginUser } from "../redux/user";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, TextField } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,11 @@ const Login = () => {
 
   return (
     <div>
-      <TextField />
+      <div>
+        <TextField onChange={(e) => setEmail(e.target.value)} />
+        <TextField onChange={(e) => setPassword(e.target.value)} />
+        <Button onClick={login}>Login</Button>
+      </div>
     </div>
   );
 };
