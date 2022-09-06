@@ -12,15 +12,26 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ResponsiveAppBar = () => {
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const menuDirectories = [
     { href: "/sign-up", name: "Sign Up" },
     { href: "/how-it-works", name: "How it works" },
     { href: "/login", name: "Login" },
   ];
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = [
+    {
+      href: "/profile",
+      name: "Profile",
+    },
+    { name: "Logout", href: "/", action: "logout" },
+  ];
+
+  const logout = (token) => {};
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -40,29 +51,57 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const handleMenuTexts = () => {
+    if (user) {
+      return (
+        <Button
+          key={menuDirectories[1].name}
+          onClick={handleCloseNavMenu}
+          sx={{ my: 2, color: "white", display: "block" }}
+        >
+          <Link to={menuDirectories[1].href} className="textDecoration">
+            {menuDirectories[1].name}
+            {console.log("dentro", menuDirectories[1].name)}
+          </Link>
+        </Button>
+      );
+    } else {
+      return menuDirectories.map((page) => (
+        <Button
+          key={page.name}
+          onClick={handleCloseNavMenu}
+          sx={{ my: 2, color: "white", display: "block" }}
+        >
+          <Link to={page.href} className="textDecoration">
+            {page.name}
+          </Link>
+        </Button>
+      ));
+    }
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
+          <Link to="/" className="textDecoration">
+            <Typography
+              variant="h6"
+              noWrap
+              component="p"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              Time Journal
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -94,7 +133,9 @@ const ResponsiveAppBar = () => {
             >
               {menuDirectories.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Link to={page.href}>{page.name}</Link>
+                  <Link to={page.href} className="textDecoration">
+                    {page.name}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -118,47 +159,49 @@ const ResponsiveAppBar = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {menuDirectories.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex", justifyContent: "flex-end" },
+            }}
+          >
+            {handleMenuTexts()}
+          </Box>
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
               >
-                <Link to={page.href}> {page.name}</Link>
-              </Button>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                {settings.map((setting) => (
+                  <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                    <Link to={setting.href} className="textDecoration">
+                      {setting.name}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            ""
+          )}
         </Toolbar>
       </Container>
     </AppBar>
