@@ -7,24 +7,29 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 
+import Menu from "./components/Menu";
+
+import PrivateRoute from "./hooks/PrivateRoute";
+
 import Login from "./pages/Login";
+import HowItWorks from "./pages/HowItWorks";
+import IndexLogin from "./pages/IndexLogin";
+import NotFound from "./pages/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+        <Menu />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="*"
-            element={
-              <main>
-                <p>Oops, you went to wrong route. Please try another.</p>
-              </main>
-            }
-          />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="index" element={<IndexLogin />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>
