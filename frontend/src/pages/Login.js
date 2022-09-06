@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { loginUser } from "../redux/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, status } = useSelector((state) => state.user);
+  // const { user, status } = useSelector((state) => state.user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,8 +23,7 @@ const Login = () => {
       username: response.payload.user.name,
     };
     localStorage.setItem("user", JSON.stringify(parsedResponse));
-    localStorage.setItem("userEmail", response.payload.user.email);
-    localStorage.setItem("usernam", response.payload.user.name);
+    navigate("/index");
   };
 
   return (

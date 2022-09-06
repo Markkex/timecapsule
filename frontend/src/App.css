@@ -8,6 +8,11 @@
     
 }
 
+.textDecoration {
+    color:white;
+    text-decoration: none;
+}
+
 #myVideo {
     position: absolute;
     right: 0;
