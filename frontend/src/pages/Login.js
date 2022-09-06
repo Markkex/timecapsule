@@ -13,9 +13,16 @@ const Login = () => {
 
   const login = async () => {
     let obj = { email, password };
-    await dispatch(loginUser({ obj: obj }));
-    await console.log(user);
-    await console.log(status);
+    let response = await dispatch(loginUser({ obj: obj }));
+    console.log(response.payload);
+    let parsedResponse = {
+      token: response.payload.token,
+      email: response.payload.user.email,
+      username: response.payload.user.name,
+    };
+    localStorage.setItem("user", JSON.stringify(parsedResponse));
+    localStorage.setItem("userEmail", response.payload.user.email);
+    localStorage.setItem("usernam", response.payload.user.name);
   };
 
   return (
