@@ -14,7 +14,8 @@ import PrivateRoute from "./hooks/PrivateRoute";
 import Login from "./pages/Login";
 import HowItWorks from "./pages/HowItWorks";
 import IndexLogin from "./pages/IndexLogin";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
+import { Container } from "@mui/system";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,15 +23,17 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Menu />
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="index" element={<IndexLogin />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Container>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/index" element={<IndexLogin />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Container>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
